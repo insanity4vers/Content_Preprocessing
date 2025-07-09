@@ -28,10 +28,11 @@ if __name__ == '__main__':
 
     try:
         df = pd.read_excel(args.input)
+        df.dropna()
+        df.drop_duplicates()
         contents, urls = extract_content_and_url(df['content'].astype(str))
         content_full = contents.where(urls == '', contents + '\n' + urls)
-        content_full = add_or_replace(content_full, random.choice(masks))
-        content_full = content_full.drop_duplicates()
+        content_full = add_or_replace(content_full, masks[random.randint(0, len(masks) - 1)])
         content_full.to_frame('content').to_excel(args.output, index=False)
         print(f"Đã xử lý xong và lưu kết quả {args.output}")
     except Exception as e:
