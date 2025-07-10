@@ -29,25 +29,25 @@ def process_content_excel(input_path, output_path, masks):
     content_full = contents.where(urls == '', contents + '\n' + urls)
     content_full = add_or_replace(content_full, random.choice(masks))
     content_full.to_frame('content').to_excel(output_path, index=False)
-    print(f"Đã xử lý xong nội dung và lưu kết quả vào {output_path}")
+    print(f"Finished processing and saving the results to {output_path}")
 
 def process_url_excel(input_path, output_path):
     try:
         df = pd.read_excel(input_path, usecols=['url'])
     except ValueError:
-        raise ValueError("Không tìm thấy cột 'url' trong file excel.")
+        raise ValueError("Column 'url' not found in excel file")
     df['url'] = remove_query_string(df['url'])
     df.drop_duplicates(subset='url', ignore_index=True, inplace=True)
     df.to_excel(output_path, index=False)
-    print(f"Đã xử lý xong và lưu kết quả vào {output_path}")
+    print(f"Finished processing and saving the results to {output_path}")
 
 # --- Main CLI ---
 def main():
     parser = argparse.ArgumentParser(description='Contents processing.')
     parser.add_argument('--ci', type=str, default='contents_input.xlsx', help='Post contents input Excel file path')
-    parser.add_argument('--co', type=str, default='contents_output.xlsx', help='Post contents output Excel file path')
+    parser.add_argument('--co', type=str, default='contents.xlsx', help='Post contents output Excel file path')
     parser.add_argument('--gi', type=str, default='group_urls_input.xlsx', help='Group url input Excel file path')
-    parser.add_argument('--go', type=str, default='group_urls_output.xlsx', help='Group url output Excel file path')
+    parser.add_argument('--go', type=str, default='group_urls.xlsx', help='Group url output Excel file path')
     args = parser.parse_args()
     masks = [
         'SALE CỰC SHOCK MÚC NGAY THÔI!!!',
@@ -59,7 +59,7 @@ def main():
         process_content_excel(args.ci, args.co, masks)
         process_url_excel(args.gi, args.go)
     except Exception as e:
-        print(f"Lỗi: {e}")
+        print(f"Error: {e}")
 
 if __name__ == '__main__':
     main()
