@@ -49,12 +49,7 @@ def main():
     parser.add_argument('--gi', type=str, default='group_urls_input.xlsx', help='Group url input Excel file path')
     parser.add_argument('--go', type=str, default='group_urls.xlsx', help='Group url output Excel file path')
     args = parser.parse_args()
-    masks = [
-        'SALE CỰC SHOCK MÚC NGAY THÔI!!!',
-        'DEAL CỰC HỜI SALE CỰC SỐC!!!',
-        'SIÊU SALE CỰC SỐC!!!',
-        'ĐỪNG BỎ LỠ CƠ HỘI!!!',
-    ]
+    masks = [""]
     try:
         process_content_excel(args.ci, args.co, masks)
         process_url_excel(args.gi, args.go)
