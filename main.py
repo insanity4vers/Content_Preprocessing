@@ -5,9 +5,9 @@ import os
 from dotenv import load_dotenv
 from google import generativeai
 
+
 # Load environment variables from .env file
 load_dotenv()
-
 
 # --- Content generation ---
 def process_content(input_path, output_path):
@@ -59,8 +59,8 @@ def process_content(input_path, output_path):
             print(f"❌ Lỗi API nghiêm trọng: {e}")
             generated_content_list.append({
                 'id': i + 1,
-                'original_request': request_text,
-                'generated_content': f"ERROR: API_CALL_FAILED ({e})"
+                'request': request_text,
+                'content': f"ERROR: API_CALL_FAILED ({e})"
             })
         print(f"✅ Đã hoàn thành yêu cầu {i + 1}/{len(requests)}.")
         print("Đang tạm dừng 60 giây để tránh quá tải API...")
