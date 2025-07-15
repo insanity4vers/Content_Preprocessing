@@ -1,7 +1,12 @@
 import time
 import pandas as pd
 import argparse
+import os
+from dotenv import load_dotenv
 from google import generativeai
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 # --- Content generation ---
@@ -17,7 +22,10 @@ def process_content(input_path, output_path):
     df.dropna(subset=['content'], inplace=True)
     df.drop_duplicates(subset='content', ignore_index=True, inplace=True)
 
-    api_key = "AIzaSyAZtqTOMxd_dc-J0cCwwvzvWu8mLx2akEc"
+    api_key = os.getenv('API_KEY')
+    if not api_key:
+        raise ValueError("API_KEY not found in environment variables. Please check your .env file.")
+
     generativeai.configure(api_key=api_key)
     model = generativeai.GenerativeModel(model_name='gemini-2.5-pro')
 
