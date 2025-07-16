@@ -37,7 +37,7 @@ def process_content(input_path, output_path):
         print(f"Đang xử lý yêu cầu {i + 1}/{len(requests)}: '{str(request_text)[:60]}...'")
 
         try:
-            response = model.generate_content(f"Tạo một bài đăng bằng tiếng Việt ngắn gọn, giới thiệu sản phẩm theo nội dung và liên kết mua hàng sau đây: \n{request_text}\n Lưu ý: chỉ trả về một kết quả duy nhất không nói gì khác ngoài nội dung bài đăng, không cần thêm bất kỳ thông tin nào khác.")
+            response = model.generate_content(f"Tạo một bài đăng bằng tiếng Việt độ dài tối đa 500 ký tự bao gồm hashtag, giới thiệu ngắn gọn về sản phẩm theo nội dung và liên kết mua hàng sau đây: \n{request_text}\n Lưu ý: chỉ trả về một kết quả duy nhất không nói gì khác ngoài nội dung bài đăng, không cần thêm bất kỳ thông tin nào khác.")
 
             if response.parts:
                 content = response.text
@@ -63,8 +63,9 @@ def process_content(input_path, output_path):
                 'content': f"ERROR: API_CALL_FAILED ({e})"
             })
         print(f"✅ Đã hoàn thành yêu cầu {i + 1}/{len(requests)}.")
-        print("Đang tạm dừng 60 giây để tránh quá tải API...")
-        time.sleep(60)
+        if i < len(requests) - 1:
+            print("Đang tạm dừng 30 giây để tránh quá tải API...")
+            time.sleep(30)
 
     print("\nHoàn tất việc tạo nội dung.")
 
