@@ -37,7 +37,7 @@ def process_content(input_path, output_path):
         print(f"Đang xử lý yêu cầu {i + 1}/{len(requests)}: '{str(request_text)[:60]}...'")
 
         try:
-            response = model.generate_content(f"Tạo một bài đăng bằng tiếng Việt ngắn gọn, giới thiệu sản phẩm theo nội dung và liên kết mua hàng sau đây: \n{request_text}\n Lưu ý: chỉ trả về một kết quả duy nhất")
+            response = model.generate_content(f"Tạo một bài đăng bằng tiếng Việt ngắn gọn, giới thiệu sản phẩm theo nội dung và liên kết mua hàng sau đây: \n{request_text}\n Lưu ý: chỉ trả về một kết quả duy nhất không nói gì khác ngoài nội dung bài đăng, không cần thêm bất kỳ thông tin nào khác.")
 
             if response.parts:
                 content = response.text
